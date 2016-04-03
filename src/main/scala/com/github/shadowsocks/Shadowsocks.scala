@@ -121,7 +121,7 @@ class Shadowsocks
             fab.setEnabled(false)
             fabProgressCircle.show()
             preferences.setEnabled(false)
-            stat.setVisibility(View.GONE)
+            stat.startAnimation(new ExpandCollapseAnimation(stat))
           case State.CONNECTED =>
             fab.setBackgroundTintList(greenTint)
             if (state == State.CONNECTING) {
@@ -132,7 +132,7 @@ class Shadowsocks
             fab.setEnabled(true)
             changeSwitch(checked = true)
             preferences.setEnabled(false)
-            stat.setVisibility(View.VISIBLE)
+            stat.startAnimation(new ExpandCollapseAnimation(stat, true))
             connectionTest.setText(
               if (ShadowsocksApplication.isVpnEnabled) getString(R.string.connection_test_pending) else null)
           case State.STOPPED =>
@@ -149,14 +149,14 @@ class Shadowsocks
               Log.e(Shadowsocks.TAG, "Error to start VPN service: " + m)
             }
             preferences.setEnabled(true)
-            stat.setVisibility(View.GONE)
+            stat.startAnimation(new ExpandCollapseAnimation(stat))
           case State.STOPPING =>
             fab.setBackgroundTintList(greyTint)
             fab.setImageResource(R.drawable.ic_start_busy)
             fab.setEnabled(false)
             if (state == State.CONNECTED) fabProgressCircle.show()  // ignore for stopped
             preferences.setEnabled(false)
-            stat.setVisibility(View.GONE)
+            stat.startAnimation(new ExpandCollapseAnimation(stat))
         }
         state = s
       })
@@ -461,14 +461,14 @@ class Shadowsocks
           fab.setImageResource(R.drawable.ic_start_busy)
           preferences.setEnabled(false)
           fabProgressCircle.show()
-          stat.setVisibility(View.GONE)
+          stat.startAnimation(new ExpandCollapseAnimation(stat))
         case State.CONNECTED =>
           fab.setBackgroundTintList(greenTint)
           serviceStarted = true
           fab.setImageResource(R.drawable.ic_start_connected)
           preferences.setEnabled(false)
           fabProgressCircle.postDelayed(hideCircle, 100)
-          stat.setVisibility(View.VISIBLE)
+          stat.startAnimation(new ExpandCollapseAnimation(stat, true))
           connectionTest.setText(
             if (ShadowsocksApplication.isVpnEnabled) getString(R.string.connection_test_pending) else null)
         case State.STOPPING =>
@@ -477,14 +477,14 @@ class Shadowsocks
           fab.setImageResource(R.drawable.ic_start_busy)
           preferences.setEnabled(false)
           fabProgressCircle.show()
-          stat.setVisibility(View.GONE)
+          stat.startAnimation(new ExpandCollapseAnimation(stat))
         case _ =>
           fab.setBackgroundTintList(greyTint)
           serviceStarted = false
           fab.setImageResource(R.drawable.ic_start_idle)
           preferences.setEnabled(true)
           fabProgressCircle.postDelayed(hideCircle, 100)
-          stat.setVisibility(View.GONE)
+          stat.startAnimation(new ExpandCollapseAnimation(stat))
       }
       state = bgService.getState
     }
