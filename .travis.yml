@@ -50,4 +50,4 @@ install:
       fi
 
 script:
-    - $SBTPATH/sbt go-build android:package
+    - $SBTPATH/sbt go-clean clean go-build android:package
