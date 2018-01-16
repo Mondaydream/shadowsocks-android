@@ -82,7 +82,7 @@ class ServiceNotification(private val service: BaseService.Interface, profileNam
 
     init {
         service as Context
-        if (Build.VERSION.SDK_INT < 24) builder.addAction(R.drawable.ic_navigation_close,
+        if (Build.VERSION.SDK_INT < 24) builder.addAction(R.drawable.ic_navigation_close_white,
                 service.getString(R.string.stop), PendingIntent.getBroadcast(service, 0, Intent(Action.CLOSE), 0))
         val power = service.getSystemService(Context.POWER_SERVICE) as PowerManager
         update(if (if (Build.VERSION.SDK_INT >= 20) power.isInteractive else @Suppress("DEPRECATION") power.isScreenOn)
